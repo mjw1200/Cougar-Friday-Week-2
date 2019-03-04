@@ -11,6 +11,10 @@ const left = "37";
 const up = "38";
 const right = "39";
 const down = "40";
+const minGhostX = 0;
+const maxGhostX = 1175;
+const minGhostY = 25;
+const maxGhostY = 550;
 
 //-----------------------------------------------------------------------------
 // eraseGhost
@@ -90,28 +94,41 @@ function drawGhost(x, y, eyes) {
 }
 
 $("#canvas").keydown(function (event) {
-  var eyes = 0;
-
-  eraseGhost(ghostX, ghostY);
+  var eyes = '';
+  var x = ghostX;
+  var y = ghostY;
 
   if (event.keyCode == left) {
-    ghostX -= ghostSpeed;
-    eyes = left;
+    if (x-ghostSpeed >= minGhostX) {
+      x -= ghostSpeed;
+      eyes = left;
+    }
   }
   else if (event.keyCode == up) {
-    ghostY -= ghostSpeed;
-    eyes = up;
+    if (y-ghostSpeed >= minGhostY) {
+      y -= ghostSpeed;
+      eyes = up;
+    }
   }
   else if (event.keyCode == right) {
-    ghostX += ghostSpeed;
-    eyes = right;
+    if (x+ghostSpeed <= maxGhostX) {
+      x += ghostSpeed;
+      eyes = right;
+    }
   }
   else if (event.keyCode == down) {
-    ghostY += ghostSpeed;
-    eyes = down;
+    if (y+ghostSpeed <= maxGhostY) {
+      y += ghostSpeed;
+      eyes = down;
+    }
   }
 
-  drawGhost(ghostX, ghostY, eyes);
+  if (eyes !== '') {
+    eraseGhost(ghostX, ghostY);
+    ghostX = x;
+    ghostY = y;
+    drawGhost(x, y, eyes);
+  }
 });
 
 drawGhost(ghostX, ghostY, left);
