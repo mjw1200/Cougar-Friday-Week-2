@@ -61,6 +61,8 @@ function eraseGhost(x,y) {
 // Draws a basic ghost, with the lower-left corner at (x,y)
 //-----------------------------------------------------------------------------
 function drawGhost(x, y) {
+  // Ghost body
+  ctx.fillStyle = 'black';
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x, y-4);
@@ -75,6 +77,7 @@ function drawGhost(x, y) {
   ctx.lineTo(x, y);
   ctx.fill();
 
+  // Whites of eyes
   ctx.fillStyle = 'white';
   ctx.beginPath();
   ctx.moveTo(x+8, y-20);
@@ -89,6 +92,7 @@ function drawGhost(x, y) {
   ctx.bezierCurveTo(x+24,y-17,x+23,y-20,x+20,y-20);
   ctx.fill();
 
+  // Pupils of eyes
   ctx.fillStyle = 'black';
   ctx.beginPath();
   ctx.arc(x+18, y-14, 2, 0, Math.PI * 2, true);
