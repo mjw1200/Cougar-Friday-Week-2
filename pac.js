@@ -46,15 +46,15 @@ function drawGhost(x, y) {
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x, y-4);
-  ctx.bezierCurveTo(83, 94, 89, 88, 97, 88);
-  ctx.bezierCurveTo(105, 88, 111, 94, 111, 102);
-  ctx.lineTo(111, 116);
-  ctx.lineTo(106.333, 111.333);
-  ctx.lineTo(101.666, 116);
-  ctx.lineTo(97, 111.333);
-  ctx.lineTo(92.333, 116);
-  ctx.lineTo(87.666, 111.333);
-  ctx.lineTo(83, 116);
+  ctx.bezierCurveTo(x,y-22, x+6,y-28,x+14,y-28);
+  ctx.bezierCurveTo(x+22,y-28,x+28,y-22,x+28,y-14);
+  ctx.lineTo(x+28, y);
+  ctx.lineTo(x+23.333,y-4.667);
+  ctx.lineTo(x+18.666, y);
+  ctx.lineTo(x+14,y-4.667);
+  ctx.lineTo(x+9.333, y);
+  ctx.lineTo(x+4.666, y-4.667);
+  ctx.lineTo(x, y);
   ctx.fill();
 
   ctx.fillStyle = 'white';
