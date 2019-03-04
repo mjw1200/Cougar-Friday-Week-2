@@ -7,6 +7,11 @@ var ghostSpeed = 5;
 var ghostY = 100;
 var ghostX = 50;
 
+const left = "37";
+const up = "38";
+const right = "39";
+const down = "40";
+
 //-----------------------------------------------------------------------------
 // eraseGhost
 // Erases ghost, lower-left corner at (x,y)
@@ -26,7 +31,7 @@ function eraseGhost(x,y) {
 // drawGhost
 // Draws ghost, lower-left corner at (x,y)
 //-----------------------------------------------------------------------------
-function drawGhost(x, y) {
+function drawGhost(x, y, eyes) {
   // Ghost body
   ctx.fillStyle = 'black';
   ctx.beginPath();
@@ -58,41 +63,58 @@ function drawGhost(x, y) {
   ctx.bezierCurveTo(x+24,y-17,x+23,y-20,x+20,y-20);
   ctx.fill();
 
-  // Pupils of eyes
+  // Right pupil
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.arc(x+18, y-14, 2, 0, Math.PI * 2, true);
+  if (eyes === left)
+    ctx.arc(x+18, y-14, 2, 0, Math.PI * 2, true);
+  else if (eyes === right)
+    ctx.arc(x+22, y-14, 2, 0, Math.PI * 2, true);
+  else if (eyes === down)
+    ctx.arc(x+20, y-12, 2, 0, Math.PI * 2, true);
+  else if (eyes === up)
+    ctx.arc(x+20, y-18, 2, 0, Math.PI * 2, true);
   ctx.fill();
 
+  // Left pupil
   ctx.beginPath();
-  ctx.arc(x+6, y-14, 2, 0, Math.PI * 2, true);
+  if (eyes === left)
+    ctx.arc(x+6, y-14, 2, 0, Math.PI * 2, true);
+  else if (eyes === right)
+    ctx.arc(x+10, y-14, 2, 0, Math.PI * 2, true);
+  else if (eyes === down)
+    ctx.arc(x+8, y-12, 2, 0, Math.PI * 2, true);
+  else if (eyes === up)
+    ctx.arc(x+8, y-18, 2, 0, Math.PI * 2, true);
   ctx.fill();
 }
 
 $("#canvas").keydown(function (event) {
+  var eyes = 0;
+
   eraseGhost(ghostX, ghostY);
 
-  if (event.keyCode == "37") {
-    // console.log("Left");
+  if (event.keyCode == left) {
     ghostX -= ghostSpeed;
+    eyes = left;
   }
-  else if (event.keyCode == "38") {
-    // console.log("Up");
+  else if (event.keyCode == up) {
     ghostY -= ghostSpeed;
+    eyes = up;
   }
-  else if (event.keyCode == "39") {
-    // console.log("Right");
+  else if (event.keyCode == right) {
     ghostX += ghostSpeed;
+    eyes = right;
   }
-  else if (event.keyCode == "40") {
-    // console.log("Down");
+  else if (event.keyCode == down) {
     ghostY += ghostSpeed;
+    eyes = down;
   }
 
-  drawGhost(ghostX, ghostY);
+  drawGhost(ghostX, ghostY, eyes);
 });
 
-drawGhost(ghostX, ghostY);
+drawGhost(ghostX, ghostY, left);
 
 // function roundedRect(ctx, x, y, width, height, radius) {
 //   ctx.beginPath();
