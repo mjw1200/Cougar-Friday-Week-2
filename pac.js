@@ -42,11 +42,25 @@ function roundedRect(ctx, x, y, width, height, radius) {
 // }
 
 //-----------------------------------------------------------------------------
+// eraseGhost
+// Erase a basic ghost, with the lower-left corner at (x,y)
+//-----------------------------------------------------------------------------
+function eraseGhost(x,y) {
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.lineTo(x+28, y);
+  ctx.lineTo(x+28, y-28);
+  ctx.lineTo(x, y-28);
+  ctx.lineTo(x,y);
+  ctx.fill();
+}
+
+//-----------------------------------------------------------------------------
 // drawGhost
-// Draws a basic ghost, beginning at the lower-left corner specfied by x,y
+// Draws a basic ghost, with the lower-left corner at (x,y)
 //-----------------------------------------------------------------------------
 function drawGhost(x, y) {
-  // ---------- Ghost
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x, y-4);
@@ -85,4 +99,4 @@ function drawGhost(x, y) {
   ctx.fill();
 }
 
-drawGhost(83, 116);
+drawGhost(50, 100);
