@@ -3,64 +3,13 @@ var ctx = canvas.getContext("2d");
 
 canvas.focus();
 
-$("#canvas").keydown(function (event) {
-  if (event.keyCode == "37") {
-    console.log("Left");
-  }
-  else if (event.keyCode == "38") {
-    console.log("Up");
-  }
-  else if (event.keyCode == "39") {
-    console.log("Right");
-  }
-  else if (event.keyCode == "40") {
-    console.log("Down");
-  }
-});
-
-function roundedRect(ctx, x, y, width, height, radius) {
-  ctx.beginPath();
-  ctx.moveTo(x, y + radius);
-  ctx.lineTo(x, y + height - radius);
-  ctx.arcTo(x, y + height, x + radius, y + height, radius);
-  ctx.lineTo(x + width - radius, y + height);
-  ctx.arcTo(x + width, y + height, x + width, y + height-radius, radius);
-  ctx.lineTo(x + width, y + radius);
-  ctx.arcTo(x + width, y, x + width - radius, y, radius);
-  ctx.lineTo(x + radius, y);
-  ctx.arcTo(x, y, x, y + radius, radius);
-  ctx.stroke();
-}
-
-// ---------- The game board
-// roundedRect(ctx, 12, 12, 150, 150, 15);
-// roundedRect(ctx, 19, 19, 150, 150, 9);
-// roundedRect(ctx, 53, 53, 49, 33, 10);
-// roundedRect(ctx, 53, 119, 49, 16, 6);
-// roundedRect(ctx, 135, 53, 49, 33, 10);
-// roundedRect(ctx, 135, 119, 25, 49, 10);
-
-// ---------- Dots and Pac-Man
-// ctx.beginPath();
-// ctx.arc(37, 37, 13, Math.PI / 7, -Math.PI / 7, false);
-// ctx.lineTo(31, 37);
-// ctx.fill();
-
-// for (var i = 0; i < 8; i++) {
-//   ctx.fillRect(51 + i * 16, 35, 4, 4);
-// }
-
-// for (i = 0; i < 6; i++) {
-//   ctx.fillRect(115, 51 + i * 16, 4, 4);
-// }
-
-// for (i = 0; i < 8; i++) {
-//   ctx.fillRect(51 + i * 16, 99, 4, 4);
-// }
+var ghostSpeed = 5;
+var ghostY = 100;
+var ghostX = 50;
 
 //-----------------------------------------------------------------------------
 // eraseGhost
-// Erase a basic ghost, with the lower-left corner at (x,y)
+// Erases ghost, lower-left corner at (x,y)
 //-----------------------------------------------------------------------------
 function eraseGhost(x,y) {
   ctx.fillStyle = 'white';
@@ -75,7 +24,7 @@ function eraseGhost(x,y) {
 
 //-----------------------------------------------------------------------------
 // drawGhost
-// Draws a basic ghost, with the lower-left corner at (x,y)
+// Draws ghost, lower-left corner at (x,y)
 //-----------------------------------------------------------------------------
 function drawGhost(x, y) {
   // Ghost body
@@ -120,4 +69,67 @@ function drawGhost(x, y) {
   ctx.fill();
 }
 
-drawGhost(50, 100);
+$("#canvas").keydown(function (event) {
+  eraseGhost(ghostX, ghostY);
+
+  if (event.keyCode == "37") {
+    // console.log("Left");
+    ghostX -= ghostSpeed;
+  }
+  else if (event.keyCode == "38") {
+    // console.log("Up");
+    ghostY -= ghostSpeed;
+  }
+  else if (event.keyCode == "39") {
+    // console.log("Right");
+    ghostX += ghostSpeed;
+  }
+  else if (event.keyCode == "40") {
+    // console.log("Down");
+    ghostY += ghostSpeed;
+  }
+
+  drawGhost(ghostX, ghostY);
+});
+
+drawGhost(ghostX, ghostY);
+
+// function roundedRect(ctx, x, y, width, height, radius) {
+//   ctx.beginPath();
+//   ctx.moveTo(x, y + radius);
+//   ctx.lineTo(x, y + height - radius);
+//   ctx.arcTo(x, y + height, x + radius, y + height, radius);
+//   ctx.lineTo(x + width - radius, y + height);
+//   ctx.arcTo(x + width, y + height, x + width, y + height-radius, radius);
+//   ctx.lineTo(x + width, y + radius);
+//   ctx.arcTo(x + width, y, x + width - radius, y, radius);
+//   ctx.lineTo(x + radius, y);
+//   ctx.arcTo(x, y, x, y + radius, radius);
+//   ctx.stroke();
+// }
+
+// ---------- The game board
+// roundedRect(ctx, 12, 12, 150, 150, 15);
+// roundedRect(ctx, 19, 19, 150, 150, 9);
+// roundedRect(ctx, 53, 53, 49, 33, 10);
+// roundedRect(ctx, 53, 119, 49, 16, 6);
+// roundedRect(ctx, 135, 53, 49, 33, 10);
+// roundedRect(ctx, 135, 119, 25, 49, 10);
+
+// ---------- Dots and Pac-Man
+// ctx.beginPath();
+// ctx.arc(37, 37, 13, Math.PI / 7, -Math.PI / 7, false);
+// ctx.lineTo(31, 37);
+// ctx.fill();
+
+// for (var i = 0; i < 8; i++) {
+//   ctx.fillRect(51 + i * 16, 35, 4, 4);
+// }
+
+// for (i = 0; i < 6; i++) {
+//   ctx.fillRect(115, 51 + i * 16, 4, 4);
+// }
+
+// for (i = 0; i < 8; i++) {
+//   ctx.fillRect(51 + i * 16, 99, 4, 4);
+// }
