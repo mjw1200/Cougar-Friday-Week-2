@@ -41,6 +41,10 @@ function roundedRect(ctx, x, y, width, height, radius) {
 //   ctx.fillRect(51 + i * 16, 99, 4, 4);
 // }
 
+//-----------------------------------------------------------------------------
+// drawGhost
+// Draws a basic ghost, beginning at the lower-left corner specfied by x,y
+//-----------------------------------------------------------------------------
 function drawGhost(x, y) {
   // ---------- Ghost
   ctx.beginPath();
