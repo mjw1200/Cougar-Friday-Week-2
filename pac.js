@@ -1,5 +1,22 @@
-var canvas = $("#canvas")[0]; // document.getElementById("canvas");
+var canvas = $("#canvas")[0];
 var ctx = canvas.getContext("2d");
+
+canvas.focus();
+
+$("#canvas").keydown(function (event) {
+  if (event.keyCode == "37") {
+    console.log("Left");
+  }
+  else if (event.keyCode == "38") {
+    console.log("Up");
+  }
+  else if (event.keyCode == "39") {
+    console.log("Right");
+  }
+  else if (event.keyCode == "40") {
+    console.log("Down");
+  }
+});
 
 function roundedRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
