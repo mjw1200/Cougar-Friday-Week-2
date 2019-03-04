@@ -59,25 +59,25 @@ function drawGhost(x, y) {
 
   ctx.fillStyle = 'white';
   ctx.beginPath();
-  ctx.moveTo(91, 96);
-  ctx.bezierCurveTo(88, 96, 87, 99, 87, 101);
-  ctx.bezierCurveTo(87, 103, 88, 106, 91, 106);
-  ctx.bezierCurveTo(94, 106, 95, 103, 95, 101);
-  ctx.bezierCurveTo(95, 99, 94, 96, 91, 96);
-  ctx.moveTo(103, 96);
-  ctx.bezierCurveTo(100, 96, 99, 99, 99, 101);
-  ctx.bezierCurveTo(99, 103, 100, 106, 103, 106);
-  ctx.bezierCurveTo(106, 106, 107, 103, 107, 101);
-  ctx.bezierCurveTo(107, 99, 106, 96, 103, 96);
+  ctx.moveTo(x+8, y-20);
+  ctx.bezierCurveTo(x+5,y-20,x+4,y-17,x+4,y-15);
+  ctx.bezierCurveTo(x+4,y-13,x+5,y-10,x+8,y-10);
+  ctx.bezierCurveTo(x+11,y-10,x+12,y-13,x+12,y-15);
+  ctx.bezierCurveTo(x+12,y-17,x+11,y-20,x+8,y-20);
+  ctx.moveTo(x+20, y-20);
+  ctx.bezierCurveTo(x+17,y-20,x+16,y-17,x+16,y-15);
+  ctx.bezierCurveTo(x+16,y-13,x+17,y-10,x+20,y-10);
+  ctx.bezierCurveTo(x+23,y-10,x+24,y-13,x+24,y-15);
+  ctx.bezierCurveTo(x+24,y-17,x+23,y-20,x+20,y-20);
   ctx.fill();
 
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.arc(101, 102, 2, 0, Math.PI * 2, true);
+  ctx.arc(x+18, y-14, 2, 0, Math.PI * 2, true);
   ctx.fill();
 
   ctx.beginPath();
-  ctx.arc(89, 102, 2, 0, Math.PI * 2, true);
+  ctx.arc(x+6, y-14, 2, 0, Math.PI * 2, true);
   ctx.fill();
 }
 
