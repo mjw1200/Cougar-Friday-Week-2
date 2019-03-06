@@ -77,8 +77,10 @@ function drawGhost(x, y, eyes) {
   ctx.bezierCurveTo(x+24,y-17,x+23,y-20,x+20,y-20);
   ctx.fill();
 
-  // Right pupil
+  // Pupils
   ctx.fillStyle = 'black';
+
+  // Right
   ctx.beginPath();
   if (eyes === up) {
     eyeX = x+20;
@@ -117,14 +119,14 @@ function drawGhost(x, y, eyes) {
     eyeY = y-18;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
+    console.log("Left pupil, looking up: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === down) {
     eyeX = x+8;
     eyeY = y-12;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
+    console.log("Left pupil, looking down: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === left) {
     eyeX = x+6;
@@ -138,7 +140,7 @@ function drawGhost(x, y, eyes) {
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
+    console.log("Left pupil, looking right: (" + eyeX + "," + eyeY + ")");
   }
   ctx.fill();
 }
