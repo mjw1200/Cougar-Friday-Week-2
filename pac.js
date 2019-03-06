@@ -216,10 +216,6 @@ function moveGhost(direction) {
   }
 
   if (eyes !== '') {
-    // console.log("New ghost position is (" + ghostX + "," + ghostY + ")");
-    eraseGhost(ghostX, ghostY);
-    ghostX = x;
-    ghostY = y;
     drawGhost(x, y, eyes);
   }
 }
