@@ -7,19 +7,21 @@ var ghostSpeed = 5;
 var ghostY = 100;
 var ghostX = 50;
 
-const left = "37";
-const up = "38";
-const right = "39";
-const down = "40";
+const left = 37;
+const up = 38;
+const right = 39;
+const down = 40;
 const minGhostX = 0;
 const maxGhostX = 1175;
 const minGhostY = 25;
 const maxGhostY = 550;
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 // eraseGhost
-// Erases ghost, lower-left corner at (x,y)
-//-----------------------------------------------------------------------------
+// Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
+//
+// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
+//---------------------------------------------------------------------------------------
 function eraseGhost(x,y) {
   ctx.fillStyle = 'white';
   ctx.beginPath();
@@ -31,11 +33,19 @@ function eraseGhost(x,y) {
   ctx.fill();
 }
 
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 // drawGhost
-// Draws ghost, lower-left corner at (x,y)
-//-----------------------------------------------------------------------------
+// Draws a 28x28 pixel ghost, whose lower-left corner is at (x,y)
+//
+// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
+//---------------------------------------------------------------------------------------
 function drawGhost(x, y, eyes) {
+  var eyeX = 0;
+  var eyeY = 0;
+  
+  // ghostX = x;
+  // ghostY = y;
+
   // Ghost body
   ctx.fillStyle = 'black';
   ctx.beginPath();
@@ -70,56 +80,102 @@ function drawGhost(x, y, eyes) {
   // Right pupil
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  if (eyes === left)
-    ctx.arc(x+18, y-14, 2, 0, Math.PI * 2, true);
-  else if (eyes === right)
-    ctx.arc(x+22, y-14, 2, 0, Math.PI * 2, true);
-  else if (eyes === down)
-    ctx.arc(x+20, y-12, 2, 0, Math.PI * 2, true);
-  else if (eyes === up)
-    ctx.arc(x+20, y-18, 2, 0, Math.PI * 2, true);
+  if (eyes === up) {
+    eyeX = x+20;
+    eyeY = y-18;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
+  }
+  else if (eyes === down) {
+    eyeX = x+20;
+    eyeY = y-12;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
+  }
+  if (eyes === left) {
+    eyeX = x+18;
+    eyeY = y-14;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking left: (" + eyeX + "," + eyeY + ")");
+  }
+  else if (eyes === right) {
+    eyeX = x+22;
+    eyeY = y-14;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
+  }
   ctx.fill();
 
   // Left pupil
   ctx.beginPath();
-  if (eyes === left)
-    ctx.arc(x+6, y-14, 2, 0, Math.PI * 2, true);
-  else if (eyes === right)
-    ctx.arc(x+10, y-14, 2, 0, Math.PI * 2, true);
-  else if (eyes === down)
-    ctx.arc(x+8, y-12, 2, 0, Math.PI * 2, true);
-  else if (eyes === up)
-    ctx.arc(x+8, y-18, 2, 0, Math.PI * 2, true);
+  if (eyes === up) {
+    eyeX = x+8;
+    eyeY = y-18;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
+  }
+  else if (eyes === down) {
+    eyeX = x+8;
+    eyeY = y-12;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
+  }
+  else if (eyes === left) {
+    eyeX = x+6;
+    eyeY = y-14;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Left pupil, looking left: (" + eyeX + "," + eyeY + ")");
+  }
+  else if (eyes === right) {
+    eyeX = x+10;
+    eyeY = y-14;
+
+    ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
+    console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
+  }
   ctx.fill();
 }
 
-$("#canvas").keydown(function (event) {
+//---------------------------------------------------------------------------------------
+// moveGhost
+// Moves a ghost up, down, left, or right by "speed" pixels
+//
+// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
+//---------------------------------------------------------------------------------------
+function moveGhost(direction) {
   var eyes = '';
   var x = ghostX;
   var y = ghostY;
 
-  if (event.keyCode == left) {
-    if (x-ghostSpeed >= minGhostX) {
-      x -= ghostSpeed;
-      eyes = left;
-    }
-  }
-  else if (event.keyCode == up) {
+  if (direction === up) {
     if (y-ghostSpeed >= minGhostY) {
       y -= ghostSpeed;
       eyes = up;
     }
   }
-  else if (event.keyCode == right) {
+  else if (direction === down) {
+    if (y+ghostSpeed <= maxGhostY) {
+      y += ghostSpeed;
+      eyes = down;
+    }
+  }
+  else if (direction === right) {
     if (x+ghostSpeed <= maxGhostX) {
       x += ghostSpeed;
       eyes = right;
     }
   }
-  else if (event.keyCode == down) {
-    if (y+ghostSpeed <= maxGhostY) {
-      y += ghostSpeed;
-      eyes = down;
+  else if (direction === left) {
+    if (x-ghostSpeed >= minGhostX) {
+      x -= ghostSpeed;
+      eyes = left;
     }
   }
 
@@ -128,6 +184,27 @@ $("#canvas").keydown(function (event) {
     ghostX = x;
     ghostY = y;
     drawGhost(x, y, eyes);
+  }
+}
+
+//---------------------------------------------------------------------------------------
+// Handle arrow key presses
+//
+// SGMS Cougar Friday students: this handler doesn't do anything. What changes would you
+// make so that it does something useful?
+//---------------------------------------------------------------------------------------
+$("#canvas").keydown(function (event) {
+  if (event.keyCode === up) {
+    moveGhost(up);
+  }
+  else if (event.keyCode === down) {
+    moveGhost(down);
+  }
+  else if (event.keyCode === right) {
+    moveGhost(right);
+  }
+  else if (event.keyCode === left) {
+    moveGhost(left);
   }
 });
 
