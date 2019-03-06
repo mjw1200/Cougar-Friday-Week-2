@@ -19,6 +19,11 @@ const minCharacterY = 25;
 const maxCharacterY = 550;
 const pacDiameter = 13;
 
+const onePiFour = Math.PI/4;
+const threePieFour = 3*onePiFour; // 3*(Math.PI/4)
+const fivePieFour = 5*onePiFour;  // 5*(Math.PI/4)
+const sevenPieFour = 7*onePiFour; // 7*(Math.PI/4)
+
 //--------------------------------------------------------------------------------------
 // rangeCheckX
 // Ensure X is in range; return an in-range value if it's not
@@ -215,16 +220,16 @@ function drawPac(x, y, mouth) {
   ctx.beginPath();
 
   if (mouth === right || mouth === undefined) {
-    ctx.arc(x, y, pacDiameter, Math.PI / 4, -Math.PI / 4, false)
+    ctx.arc(x, y, pacDiameter, onePiFour, sevenPieFour, false)
   }
   else if (mouth === down) {
-    ctx.arc(x, y, pacDiameter, 3*(Math.PI / 4), Math.PI / 4, false)
+    ctx.arc(x, y, pacDiameter, threePieFour, onePiFour, false)
   }
   else if (mouth === left) {
-    ctx.arc(x, y, pacDiameter, 5*(Math.PI / 4), 3*(Math.PI / 4), false)
+    ctx.arc(x, y, pacDiameter, fivePieFour, threePieFour, false)
   }
   else if (mouth === up) {
-    ctx.arc(x, y, pacDiameter, 7*(Math.PI / 4), 5*(Math.PI / 4), false)
+    ctx.arc(x, y, pacDiameter, sevenPieFour, fivePieFour, false)
   }
 
   ctx.lineTo(x,y);
