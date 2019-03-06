@@ -205,7 +205,7 @@ function erasePac(x, y) {
 // drawPac
 // Draws Pac-Man at (x,y)
 //---------------------------------------------------------------------------------------
-function drawPac(x, y) {
+function drawPac(x, y, mouth) {
   erasePac(pacX, pacY);
 
   pacX = x;
@@ -213,8 +213,21 @@ function drawPac(x, y) {
 
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.arc(x, y, pacDiameter, Math.PI / 7, -Math.PI / 7, false);
-  ctx.lineTo(x-(pacDiameter/2), y);
+
+  if (mouth === right || mouth === undefined) {
+    ctx.arc(x, y, pacDiameter, Math.PI / 4, -Math.PI / 4, false)
+  }
+  else if (mouth === down) {
+    ctx.arc(x, y, pacDiameter, 3*(Math.PI / 4), Math.PI / 4, false)
+  }
+  else if (mouth === left) {
+    ctx.arc(x, y, pacDiameter, 5*(Math.PI / 4), 3*(Math.PI / 4), false)
+  }
+  else if (mouth === up) {
+    ctx.arc(x, y, pacDiameter, 7*(Math.PI / 4), 5*(Math.PI / 4), false)
+  }
+
+  ctx.lineTo(x,y);
   ctx.fill();
 }
 
@@ -223,37 +236,37 @@ function drawPac(x, y) {
 // Moves Pac-Man up, down, left, or right by "speed" pixels
 //---------------------------------------------------------------------------------------
 function movePac(direction) {
+  var mouth = 0;
   var x = pacX;
   var y = pacY;
-  var move = false;
 
   if (direction === up) {
     if (y-characterSpeed >= minCharacterY) {
       y -= characterSpeed;
-      move = true;
+      mouth = up;
     }
   }
   else if (direction === down) {
     if (y+characterSpeed <= maxCharacterY) {
       y += characterSpeed;
-      move = true;
+      mouth = down;
     }
   }
   else if (direction === right) {
     if (x+characterSpeed <= maxCharacterX) {
       x += characterSpeed;
-      move = true;
+      mouth = right;
     }
   }
   else if (direction === left) {
     if (x-characterSpeed >= minCharacterX) {
       x -= characterSpeed;
-      move = true;
+      mouth = left;
     }
   }
 
-  if (move) {
-    drawPac(x, y);
+  if (mouth !== 0) {
+    drawPac(x, y, mouth);
   }
 }
 
@@ -266,7 +279,7 @@ function movePac(direction) {
 function moveGhost(direction) {
   // console.log("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");
 
-  var eyes = '';
+  var eyes = 0;
   var x = ghostX;
   var y = ghostY;
 
@@ -295,7 +308,7 @@ function moveGhost(direction) {
     }
   }
 
-  if (eyes !== '') {
+  if (eyes !== 0) {
     drawGhost(x, y, eyes);
   }
 }
