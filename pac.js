@@ -3,9 +3,11 @@ var ctx = canvas.getContext("2d");
 
 canvas.focus();
 
-var ghostSpeed = 5;
+var characterSpeed = 5;
 var ghostY = 100;
 var ghostX = 50;
+var pacY = 100;
+var pacX = 50;
 
 const left = 37;
 const up = 38;
@@ -15,6 +17,7 @@ const minCharacterX = 0;
 const maxCharacterX = 1175;
 const minCharacterY = 25;
 const maxCharacterY = 550;
+const pacDiameter = 13;
 
 //--------------------------------------------------------------------------------------
 // rangeCheckX
@@ -185,6 +188,76 @@ function drawGhost(x, y, eyes) {
 }
 
 //---------------------------------------------------------------------------------------
+// erasePac
+// Erases Pac-Man at (x,y)
+//---------------------------------------------------------------------------------------
+function erasePac(x, y) {
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.moveTo(x-pacDiameter,y-pacDiameter);
+  ctx.lineTo(x-pacDiameter, y+pacDiameter);
+  ctx.lineTo(x+pacDiameter, y+pacDiameter);
+  ctx.lineTo(x+pacDiameter, y-pacDiameter);
+  ctx.fill();
+}
+
+//---------------------------------------------------------------------------------------
+// drawPac
+// Draws Pac-Man at (x,y)
+//---------------------------------------------------------------------------------------
+function drawPac(x, y) {
+  erasePac(pacX, pacY);
+
+  pacX = x;
+  pacY = y;
+
+  ctx.fillStyle = 'black';
+  ctx.beginPath();
+  ctx.arc(x, y, pacDiameter, Math.PI / 7, -Math.PI / 7, false);
+  ctx.lineTo(x-(pacDiameter/2), y);
+  ctx.fill();
+}
+
+//---------------------------------------------------------------------------------------
+// movePac
+// Moves Pac-Man up, down, left, or right by "speed" pixels
+//---------------------------------------------------------------------------------------
+function movePac(direction) {
+  var x = pacX;
+  var y = pacY;
+  var move = false;
+
+  if (direction === up) {
+    if (y-characterSpeed >= minCharacterY) {
+      y -= characterSpeed;
+      move = true;
+    }
+  }
+  else if (direction === down) {
+    if (y+characterSpeed <= maxCharacterY) {
+      y += characterSpeed;
+      move = true;
+    }
+  }
+  else if (direction === right) {
+    if (x+characterSpeed <= maxCharacterX) {
+      x += characterSpeed;
+      move = true;
+    }
+  }
+  else if (direction === left) {
+    if (x-characterSpeed >= minCharacterX) {
+      x -= characterSpeed;
+      move = true;
+    }
+  }
+
+  if (move) {
+    drawPac(x, y);
+  }
+}
+
+//---------------------------------------------------------------------------------------
 // moveGhost
 // Moves a ghost up, down, left, or right by "speed" pixels
 //
@@ -198,26 +271,26 @@ function moveGhost(direction) {
   var y = ghostY;
 
   if (direction === up) {
-    if (y-ghostSpeed >= minCharacterY) {
-      y -= ghostSpeed;
+    if (y-characterSpeed >= minCharacterY) {
+      y -= characterSpeed;
       eyes = up;
     }
   }
   else if (direction === down) {
-    if (y+ghostSpeed <= maxCharacterY) {
-      y += ghostSpeed;
+    if (y+characterSpeed <= maxCharacterY) {
+      y += characterSpeed;
       eyes = down;
     }
   }
   else if (direction === right) {
-    if (x+ghostSpeed <= maxCharacterX) {
-      x += ghostSpeed;
+    if (x+characterSpeed <= maxCharacterX) {
+      x += characterSpeed;
       eyes = right;
     }
   }
   else if (direction === left) {
-    if (x-ghostSpeed >= minCharacterX) {
-      x -= ghostSpeed;
+    if (x-characterSpeed >= minCharacterX) {
+      x -= characterSpeed;
       eyes = left;
     }
   }
@@ -231,7 +304,7 @@ function moveGhost(direction) {
 // Handle arrow key presses
 //
 // SGMS Cougar Friday students: this handler doesn't do anything. What changes would you
-// make so that it does something useful?
+// make so that it does something useful? TODO: Strip this function before go-live.
 //---------------------------------------------------------------------------------------
 $("#canvas").keydown(function (event) {
   // console.log("Keydown detected, keyCode is " + spellDirection(event.keyCode));
@@ -274,12 +347,7 @@ $("#canvas").keydown(function (event) {
 // roundedRect(ctx, 135, 53, 49, 33, 10);
 // roundedRect(ctx, 135, 119, 25, 49, 10);
 
-// ---------- Dots and Pac-Man
-// ctx.beginPath();
-// ctx.arc(37, 37, 13, Math.PI / 7, -Math.PI / 7, false);
-// ctx.lineTo(31, 37);
-// ctx.fill();
-
+// ---------- Dots
 // for (var i = 0; i < 8; i++) {
 //   ctx.fillRect(51 + i * 16, 35, 4, 4);
 // }
