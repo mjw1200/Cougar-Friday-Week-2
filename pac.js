@@ -17,6 +17,25 @@ const minGhostY = 25;
 const maxGhostY = 550;
 
 //--------------------------------------------------------------------------------------
+// spellDirection
+// Given a directional constant, return its string value
+//
+// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
+//---------------------------------------------------------------------------------------
+function spellDirection(direction) {
+  if (direction === up)
+    return "up";
+  else if (direction === down)
+    return "down";
+  else if (direction === left)
+    return "left";
+  else if (direction === right)
+    return "right";
+  else
+    return "non-arrow";
+}
+
+//--------------------------------------------------------------------------------------
 // eraseGhost
 // Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
 //
@@ -43,8 +62,19 @@ function drawGhost(x, y, eyes) {
   var eyeX = 0;
   var eyeY = 0;
   
-  // ghostX = x;
-  // ghostY = y;
+  eraseGhost(ghostX, ghostY);
+
+  if (x < minGhostX)
+    x = minGhostX;
+  if (x > maxGhostX)
+    x = maxGhostX;
+  if (y < minGhostY)
+    y = minGhostY;
+  if (y > maxGhostY)
+    y = maxGhostY;
+
+  ghostX = x;
+  ghostY = y;
 
   // Ghost body
   ctx.fillStyle = 'black';
@@ -87,28 +117,28 @@ function drawGhost(x, y, eyes) {
     eyeY = y-18;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
+    // console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === down) {
     eyeX = x+20;
     eyeY = y-12;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
+    // console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
   }
-  if (eyes === left) {
+  if (eyes === left || eyes === undefined) {
     eyeX = x+18;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking left: (" + eyeX + "," + eyeY + ")");
+    // console.log("Right pupil, looking left: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === right) {
     eyeX = x+22;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
+    // console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
   }
   ctx.fill();
 
@@ -119,30 +149,32 @@ function drawGhost(x, y, eyes) {
     eyeY = y-18;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Left pupil, looking up: (" + eyeX + "," + eyeY + ")");
+    // console.log("Left pupil, looking up: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === down) {
     eyeX = x+8;
     eyeY = y-12;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Left pupil, looking down: (" + eyeX + "," + eyeY + ")");
+    // console.log("Left pupil, looking down: (" + eyeX + "," + eyeY + ")");
   }
-  else if (eyes === left) {
+  else if (eyes === left || eyes === undefined) {
     eyeX = x+6;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Left pupil, looking left: (" + eyeX + "," + eyeY + ")");
+    // console.log("Left pupil, looking left: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === right) {
     eyeX = x+10;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    console.log("Left pupil, looking right: (" + eyeX + "," + eyeY + ")");
+    // console.log("Left pupil, looking right: (" + eyeX + "," + eyeY + ")");
   }
   ctx.fill();
+
+  canvas.focus();
 }
 
 //---------------------------------------------------------------------------------------
@@ -152,6 +184,8 @@ function drawGhost(x, y, eyes) {
 // SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function moveGhost(direction) {
+  // console.log("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");
+
   var eyes = '';
   var x = ghostX;
   var y = ghostY;
@@ -182,6 +216,7 @@ function moveGhost(direction) {
   }
 
   if (eyes !== '') {
+    // console.log("New ghost position is (" + ghostX + "," + ghostY + ")");
     eraseGhost(ghostX, ghostY);
     ghostX = x;
     ghostY = y;
@@ -196,6 +231,8 @@ function moveGhost(direction) {
 // make so that it does something useful?
 //---------------------------------------------------------------------------------------
 $("#canvas").keydown(function (event) {
+  // console.log("Keydown detected, keyCode is " + spellDirection(event.keyCode));
+
   if (event.keyCode === up) {
     moveGhost(up);
   }
@@ -210,7 +247,7 @@ $("#canvas").keydown(function (event) {
   }
 });
 
-drawGhost(ghostX, ghostY, left);
+// drawGhost(ghostX, ghostY, left);
 
 // function roundedRect(ctx, x, y, width, height, radius) {
 //   ctx.beginPath();
