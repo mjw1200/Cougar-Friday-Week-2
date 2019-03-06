@@ -11,28 +11,41 @@ const left = 37;
 const up = 38;
 const right = 39;
 const down = 40;
-const minGhostX = 0;
-const maxGhostX = 1175;
-const minGhostY = 25;
-const maxGhostY = 550;
+const minCharacterX = 0;
+const maxCharacterX = 1175;
+const minCharacterY = 25;
+const maxCharacterY = 550;
 
 //--------------------------------------------------------------------------------------
-// spellDirection
-// Given a directional constant, return its string value
+// rangeCheckX
+// Ensure X is in range; return an in-range value if it's not
 //
 // SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
-function spellDirection(direction) {
-  if (direction === up)
-    return "up";
-  else if (direction === down)
-    return "down";
-  else if (direction === left)
-    return "left";
-  else if (direction === right)
-    return "right";
-  else
-    return "non-arrow";
+function rangeCheckX(x) {
+  if (x < minCharacterX)
+    x = minCharacterX;
+  else if (x > maxCharacterX)
+    x = maxCharacterX;
+
+  console.log("X range-checked x to " + x);
+  return x;
+}
+
+//--------------------------------------------------------------------------------------
+// rangeCheckY
+// Ensure Y is in range; return an in-range value if it's not
+//
+// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
+//---------------------------------------------------------------------------------------
+function rangeCheckY(y) {
+  if (y < minCharacterY)
+    y = minCharacterY;
+  if (y > maxCharacterY)
+    y = maxCharacterY;
+  
+  console.log("Y range-checked x to " + y);
+  return y;
 }
 
 //--------------------------------------------------------------------------------------
@@ -64,14 +77,8 @@ function drawGhost(x, y, eyes) {
   
   eraseGhost(ghostX, ghostY);
 
-  if (x < minGhostX)
-    x = minGhostX;
-  if (x > maxGhostX)
-    x = maxGhostX;
-  if (y < minGhostY)
-    y = minGhostY;
-  if (y > maxGhostY)
-    y = maxGhostY;
+  x = rangeCheckX(x);
+  y = rangeCheckY(y);
 
   ghostX = x;
   ghostY = y;
@@ -191,25 +198,25 @@ function moveGhost(direction) {
   var y = ghostY;
 
   if (direction === up) {
-    if (y-ghostSpeed >= minGhostY) {
+    if (y-ghostSpeed >= minCharacterY) {
       y -= ghostSpeed;
       eyes = up;
     }
   }
   else if (direction === down) {
-    if (y+ghostSpeed <= maxGhostY) {
+    if (y+ghostSpeed <= maxCharacterY) {
       y += ghostSpeed;
       eyes = down;
     }
   }
   else if (direction === right) {
-    if (x+ghostSpeed <= maxGhostX) {
+    if (x+ghostSpeed <= maxCharacterX) {
       x += ghostSpeed;
       eyes = right;
     }
   }
   else if (direction === left) {
-    if (x-ghostSpeed >= minGhostX) {
+    if (x-ghostSpeed >= minCharacterX) {
       x -= ghostSpeed;
       eyes = left;
     }
@@ -284,3 +291,24 @@ $("#canvas").keydown(function (event) {
 // for (i = 0; i < 8; i++) {
 //   ctx.fillRect(51 + i * 16, 99, 4, 4);
 // }
+
+//--------------------------------------------------------------------------------------
+// spellDirection
+// Given a directional constant, return its string value
+//
+// SGMS Cougar Friday students: This function is for debugging. It probably won't do
+// anything cool.
+//---------------------------------------------------------------------------------------
+function spellDirection(direction) {
+  if (direction === up)
+    return "up";
+  else if (direction === down)
+    return "down";
+  else if (direction === left)
+    return "left";
+  else if (direction === right)
+    return "right";
+  else
+    return "non-arrow";
+}
+
