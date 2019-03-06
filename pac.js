@@ -9,53 +9,6 @@ var ghostX = 50;
 var pacY = 100;
 var pacX = 50;
 
-const left = 37;
-const up = 38;
-const right = 39;
-const down = 40;
-const minCharacterX = 0;
-const maxCharacterX = 1175;
-const minCharacterY = 25;
-const maxCharacterY = 550;
-const pacDiameter = 13;
-
-const onePiFour = Math.PI/4;
-const threePieFour = 3*onePiFour; // 3*(Math.PI/4)
-const fivePieFour = 5*onePiFour;  // 5*(Math.PI/4)
-const sevenPieFour = 7*onePiFour; // 7*(Math.PI/4)
-
-//--------------------------------------------------------------------------------------
-// rangeCheckX
-// Ensure X is in range; return an in-range value if it's not
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
-//---------------------------------------------------------------------------------------
-function rangeCheckX(x) {
-  if (x < minCharacterX)
-    x = minCharacterX;
-  else if (x > maxCharacterX)
-    x = maxCharacterX;
-
-  console.log("X range-checked x to " + x);
-  return x;
-}
-
-//--------------------------------------------------------------------------------------
-// rangeCheckY
-// Ensure Y is in range; return an in-range value if it's not
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
-//---------------------------------------------------------------------------------------
-function rangeCheckY(y) {
-  if (y < minCharacterY)
-    y = minCharacterY;
-  if (y > maxCharacterY)
-    y = maxCharacterY;
-  
-  console.log("Y range-checked x to " + y);
-  return y;
-}
-
 //--------------------------------------------------------------------------------------
 // eraseGhost
 // Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
@@ -132,28 +85,28 @@ function drawGhost(x, y, eyes) {
     eyeY = y-18;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Right pupil, looking up: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === down) {
     eyeX = x+20;
     eyeY = y-12;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Right pupil, looking down: (" + eyeX + "," + eyeY + ")");
   }
   if (eyes === left || eyes === undefined) {
     eyeX = x+18;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Right pupil, looking left: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Right pupil, looking left: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === right) {
     eyeX = x+22;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Right pupil, looking right: (" + eyeX + "," + eyeY + ")");
   }
   ctx.fill();
 
@@ -164,28 +117,28 @@ function drawGhost(x, y, eyes) {
     eyeY = y-18;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Left pupil, looking up: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Left pupil, looking up: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === down) {
     eyeX = x+8;
     eyeY = y-12;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Left pupil, looking down: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Left pupil, looking down: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === left || eyes === undefined) {
     eyeX = x+6;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Left pupil, looking left: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Left pupil, looking left: (" + eyeX + "," + eyeY + ")");
   }
   else if (eyes === right) {
     eyeX = x+10;
     eyeY = y-14;
 
     ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2, true);
-    // console.log("Left pupil, looking right: (" + eyeX + "," + eyeY + ")");
+    debuggingOutput("Left pupil, looking right: (" + eyeX + "," + eyeY + ")");
   }
   ctx.fill();
 
@@ -211,6 +164,7 @@ function erasePac(x, y) {
 // Draws Pac-Man at (x,y)
 //---------------------------------------------------------------------------------------
 function drawPac(x, y, mouth) {
+  debuggingOutput("Erasing Pac at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
   erasePac(pacX, pacY);
 
   pacX = x;
@@ -282,7 +236,7 @@ function movePac(direction) {
 // SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function moveGhost(direction) {
-  // console.log("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");
+  debuggingOutput("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");
 
   var eyes = 0;
   var x = ghostX;
@@ -325,7 +279,7 @@ function moveGhost(direction) {
 // make so that it does something useful? TODO: Strip this function before go-live.
 //---------------------------------------------------------------------------------------
 $("#canvas").keydown(function (event) {
-  // console.log("Keydown detected, keyCode is " + spellDirection(event.keyCode));
+  debuggingOutput("Keydown detected, keyCode is " + spellDirection(event.keyCode));
 
   if (event.keyCode === up) {
     moveGhost(up);
@@ -378,23 +332,4 @@ $("#canvas").keydown(function (event) {
 //   ctx.fillRect(51 + i * 16, 99, 4, 4);
 // }
 
-//--------------------------------------------------------------------------------------
-// spellDirection
-// Given a directional constant, return its string value
-//
-// SGMS Cougar Friday students: This function is for debugging. It probably won't do
-// anything cool.
-//---------------------------------------------------------------------------------------
-function spellDirection(direction) {
-  if (direction === up)
-    return "up";
-  else if (direction === down)
-    return "down";
-  else if (direction === left)
-    return "left";
-  else if (direction === right)
-    return "right";
-  else
-    return "non-arrow";
-}
 
