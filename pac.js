@@ -106,16 +106,16 @@ $("#canvas").keydown(function (event) {
   debuggingOutput("Keydown detected, keyCode is " + spellDirection(event.keyCode));
 
   if (event.keyCode === up) {
-    moveGhost(up);
+    movePac(up);
   }
   else if (event.keyCode === down) {
-    moveGhost(down);
+    movePac(down);
   }
   else if (event.keyCode === right) {
-    moveGhost(right);
+    movePac(right);
   }
   else if (event.keyCode === left) {
-    moveGhost(left);
+    movePac(left);
   }
 });
 

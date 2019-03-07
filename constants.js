@@ -1,4 +1,4 @@
-const debugging = true;
+const debugging = false;
 
 const left = 37;
 const up = 38;
