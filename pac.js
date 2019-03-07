@@ -1,19 +1,6 @@
-var canvas = $("#canvas")[0];
-var ctx = canvas.getContext("2d");
-
-canvas.focus();
-
-var characterSpeed = 5;
-var ghostY = 100;
-var ghostX = 50;
-var pacY = 100;
-var pacX = 50;
-
 //--------------------------------------------------------------------------------------
 // eraseGhost
 // Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function eraseGhost(x,y) {
   ctx.fillStyle = 'white';
@@ -29,8 +16,6 @@ function eraseGhost(x,y) {
 //---------------------------------------------------------------------------------------
 // drawGhost
 // Draws a 28x28 pixel ghost, whose lower-left corner is at (x,y)
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function drawGhost(x, y, eyes) {
   var eyeX = 0;
@@ -232,8 +217,6 @@ function movePac(direction) {
 //---------------------------------------------------------------------------------------
 // moveGhost
 // Moves a ghost up, down, left, or right by "speed" pixels
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function moveGhost(direction) {
   debuggingOutput("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");

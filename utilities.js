@@ -1,8 +1,18 @@
 //--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+// SGMS Cougar Friday students: This is boring music (https://youtu.be/WltLoI60SQ4?t=8).
+// You probably don't want to change anything in here. I mean, you can, but nothing in
+// here is cool or fun. You should spend your valuable time in the other code files.
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+var canvas = $("#canvas")[0];
+var ctx = canvas.getContext("2d");
+
+canvas.focus();
+
+//--------------------------------------------------------------------------------------
 // rangeCheckX
 // Ensure X is in range; return an in-range value if it's not
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function rangeCheckX(x) {
   if (x < minCharacterX)
@@ -17,8 +27,6 @@ function rangeCheckX(x) {
 //--------------------------------------------------------------------------------------
 // rangeCheckY
 // Ensure Y is in range; return an in-range value if it's not
-//
-// SGMS Cougar Friday students: I *recommend* not changing anything inside this function!
 //---------------------------------------------------------------------------------------
 function rangeCheckY(y) {
   if (y < minCharacterY)
@@ -33,9 +41,6 @@ function rangeCheckY(y) {
 //--------------------------------------------------------------------------------------
 // spellDirection
 // Given a directional constant, return its string value
-//
-// SGMS Cougar Friday students: This function is for debugging. It probably won't do
-// anything cool.
 //---------------------------------------------------------------------------------------
 function spellDirection(direction) {
   if (direction === up)
