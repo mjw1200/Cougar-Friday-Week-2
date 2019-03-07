@@ -1,17 +1,8 @@
-//--------------------------------------------------------------------------------------
-// eraseGhost
-// Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
+//-------------------------------------
 //---------------------------------------------------------------------------------------
-function eraseGhost(x,y) {
-  ctx.fillStyle = 'white';
-  ctx.beginPath();
-  ctx.moveTo(x,y);
-  ctx.lineTo(x+28, y);
-  ctx.lineTo(x+28, y-28);
-  ctx.lineTo(x, y-28);
-  ctx.lineTo(x,y);
-  ctx.fill();
-}
+// Ghost Functions
+//---------------------------------------------------------------------------------------
+//-------------------------------------
 
 //---------------------------------------------------------------------------------------
 // drawGhost
@@ -130,88 +121,19 @@ function drawGhost(x, y, eyes) {
   canvas.focus();
 }
 
+//--------------------------------------------------------------------------------------
+// eraseGhost
+// Erases a 28x28 pixel ghost, whose lower-left corner is at (x,y)
 //---------------------------------------------------------------------------------------
-// erasePac
-// Erases Pac-Man at (x,y)
-//---------------------------------------------------------------------------------------
-function erasePac(x, y) {
+function eraseGhost(x,y) {
   ctx.fillStyle = 'white';
   ctx.beginPath();
-  ctx.moveTo(x-pacDiameter,y-pacDiameter);
-  ctx.lineTo(x-pacDiameter, y+pacDiameter);
-  ctx.lineTo(x+pacDiameter, y+pacDiameter);
-  ctx.lineTo(x+pacDiameter, y-pacDiameter);
-  ctx.fill();
-}
-
-//---------------------------------------------------------------------------------------
-// drawPac
-// Draws Pac-Man at (x,y)
-//---------------------------------------------------------------------------------------
-function drawPac(x, y, mouth) {
-  debuggingOutput("Erasing Pac at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
-  erasePac(pacX, pacY);
-
-  pacX = x;
-  pacY = y;
-
-  ctx.fillStyle = 'black';
-  ctx.beginPath();
-
-  if (mouth === right || mouth === undefined) {
-    ctx.arc(x, y, pacDiameter, onePiFour, sevenPieFour, false)
-  }
-  else if (mouth === down) {
-    ctx.arc(x, y, pacDiameter, threePieFour, onePiFour, false)
-  }
-  else if (mouth === left) {
-    ctx.arc(x, y, pacDiameter, fivePieFour, threePieFour, false)
-  }
-  else if (mouth === up) {
-    ctx.arc(x, y, pacDiameter, sevenPieFour, fivePieFour, false)
-  }
-
+  ctx.moveTo(x,y);
+  ctx.lineTo(x+28, y);
+  ctx.lineTo(x+28, y-28);
+  ctx.lineTo(x, y-28);
   ctx.lineTo(x,y);
   ctx.fill();
-}
-
-//---------------------------------------------------------------------------------------
-// movePac
-// Moves Pac-Man up, down, left, or right by "speed" pixels
-//---------------------------------------------------------------------------------------
-function movePac(direction) {
-  var mouth = 0;
-  var x = pacX;
-  var y = pacY;
-
-  if (direction === up) {
-    if (y-characterSpeed >= minCharacterY) {
-      y -= characterSpeed;
-      mouth = up;
-    }
-  }
-  else if (direction === down) {
-    if (y+characterSpeed <= maxCharacterY) {
-      y += characterSpeed;
-      mouth = down;
-    }
-  }
-  else if (direction === right) {
-    if (x+characterSpeed <= maxCharacterX) {
-      x += characterSpeed;
-      mouth = right;
-    }
-  }
-  else if (direction === left) {
-    if (x-characterSpeed >= minCharacterX) {
-      x -= characterSpeed;
-      mouth = left;
-    }
-  }
-
-  if (mouth !== 0) {
-    drawPac(x, y, mouth);
-  }
 }
 
 //---------------------------------------------------------------------------------------
@@ -252,6 +174,96 @@ function moveGhost(direction) {
 
   if (eyes !== 0) {
     drawGhost(x, y, eyes);
+  }
+}
+
+//-------------------------------------
+//---------------------------------------------------------------------------------------
+// Pac Functions
+//---------------------------------------------------------------------------------------
+//-------------------------------------
+
+//---------------------------------------------------------------------------------------
+// drawPac
+// Draws Pac-Man at (x,y)
+//---------------------------------------------------------------------------------------
+function drawPac(x, y, mouth) {
+  debuggingOutput("Erasing Pac at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
+  erasePac(pacX, pacY);
+
+  pacX = x;
+  pacY = y;
+
+  ctx.fillStyle = 'black';
+  ctx.beginPath();
+
+  if (mouth === right || mouth === undefined) {
+    ctx.arc(x, y, pacDiameter, onePiFour, sevenPieFour, false)
+  }
+  else if (mouth === down) {
+    ctx.arc(x, y, pacDiameter, threePieFour, onePiFour, false)
+  }
+  else if (mouth === left) {
+    ctx.arc(x, y, pacDiameter, fivePieFour, threePieFour, false)
+  }
+  else if (mouth === up) {
+    ctx.arc(x, y, pacDiameter, sevenPieFour, fivePieFour, false)
+  }
+
+  ctx.lineTo(x,y);
+  ctx.fill();
+}
+
+//---------------------------------------------------------------------------------------
+// erasePac
+// Erases Pac-Man at (x,y)
+//---------------------------------------------------------------------------------------
+function erasePac(x, y) {
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.moveTo(x-pacDiameter,y-pacDiameter);
+  ctx.lineTo(x-pacDiameter, y+pacDiameter);
+  ctx.lineTo(x+pacDiameter, y+pacDiameter);
+  ctx.lineTo(x+pacDiameter, y-pacDiameter);
+  ctx.fill();
+}
+
+//---------------------------------------------------------------------------------------
+// movePac
+// Moves Pac-Man up, down, left, or right by "speed" pixels
+//---------------------------------------------------------------------------------------
+function movePac(direction) {
+  var mouth = 0;
+  var x = pacX;
+  var y = pacY;
+
+  if (direction === up) {
+    if (y-characterSpeed >= minCharacterY) {
+      y -= characterSpeed;
+      mouth = up;
+    }
+  }
+  else if (direction === down) {
+    if (y+characterSpeed <= maxCharacterY) {
+      y += characterSpeed;
+      mouth = down;
+    }
+  }
+  else if (direction === right) {
+    if (x+characterSpeed <= maxCharacterX) {
+      x += characterSpeed;
+      mouth = right;
+    }
+  }
+  else if (direction === left) {
+    if (x-characterSpeed >= minCharacterX) {
+      x -= characterSpeed;
+      mouth = left;
+    }
+  }
+
+  if (mouth !== 0) {
+    drawPac(x, y, mouth);
   }
 }
 
