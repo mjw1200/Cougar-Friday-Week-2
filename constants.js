@@ -5,6 +5,7 @@ const up = 38;
 const right = 39;
 const down = 40;
 const pacRadius = 20;
+const pacDiameter = pacRadius*2;
 const minCharacterX = pacRadius;
 const maxCharacterX = 1208-pacRadius;
 const minCharacterY = pacRadius-5;

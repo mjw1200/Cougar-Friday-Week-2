@@ -12,7 +12,7 @@ function drawPac(x, y, mouthDirection, mouthState) {
   pacMouthDirection = mouthDirection;
 
   ctx.fillStyle = 'black';
-  ctx.fillRect(pacX-pacRadius, pacY-pacRadius, pacRadius*2, pacRadius*2);
+  ctx.fillRect(pacX-pacRadius, pacY-pacRadius, pacDiameter, pacDiameter);
   ctx.fillStyle = '#FFFD38';
   
   ctx.translate(pacX, pacY);
