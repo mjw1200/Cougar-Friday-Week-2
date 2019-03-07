@@ -10,14 +10,17 @@ const minCharacterY = 25;
 const maxCharacterY = 550;
 const pacDiameter = 13;
 
-const onePiFour = Math.PI/4;
-const sevenPieFour = 7*onePiFour; // 7*(Math.PI/4)
+const closeInterval = Math.PI/8;
+const bottomJaw = Math.PI/4;
+const topJaw = 7*Math.PI/4;
 
 var characterSpeed = 10;
 var ghostY = 100;
 var ghostX = 50;
 var pacY = 100;
 var pacX = 50;
+var counter = 0;
+var pacMouthDirection = right;
 
-var pacColor = 'black';
+var pacColor = 'FFFD38';
 var collision = false;
