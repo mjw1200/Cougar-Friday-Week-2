@@ -12,7 +12,7 @@ function drawPac(x, y, mouthDirection, mouthState) {
   pacMouthDirection = mouthDirection;
 
   ctx.fillStyle = 'black';
-  ctx.fillRect(pacX-pacDiameter, pacY-pacDiameter, pacDiameter*2, pacDiameter*2);
+  ctx.fillRect(pacX-pacRadius, pacY-pacRadius, pacRadius*2, pacRadius*2);
   ctx.fillStyle = '#FFFD38';
   
   ctx.translate(pacX, pacY);
@@ -37,7 +37,7 @@ function drawPac(x, y, mouthDirection, mouthState) {
   }
       
   ctx.beginPath();
-  ctx.arc(0, 0, pacDiameter, actualBottomJaw, actualTopJaw, false)
+  ctx.arc(0, 0, pacRadius, actualBottomJaw, actualTopJaw, false)
   ctx.lineTo(0,0);
   ctx.fill();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -50,10 +50,10 @@ function drawPac(x, y, mouthDirection, mouthState) {
 function erasePac(x, y) {
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.moveTo(x-pacDiameter,y-pacDiameter);
-  ctx.lineTo(x-pacDiameter, y+pacDiameter);
-  ctx.lineTo(x+pacDiameter, y+pacDiameter);
-  ctx.lineTo(x+pacDiameter, y-pacDiameter);
+  ctx.moveTo(x-pacRadius,y-pacRadius);
+  ctx.lineTo(x-pacRadius, y+pacRadius);
+  ctx.lineTo(x+pacRadius, y+pacRadius);
+  ctx.lineTo(x+pacRadius, y-pacRadius);
   ctx.fill();
 }
 
@@ -121,7 +121,7 @@ $("#canvas").keydown(function (event) {
 
 x = Math.floor(Math.random()*((maxCharacterX-15)-(minCharacterX+16))+minCharacterX+15);
 y = Math.floor(Math.random()*((maxCharacterY+15)-(minCharacterY+16))+minCharacterY+15);
-drawPac(x, y, left);
+drawPac(rangeCheckX(x), rangeCheckY(y), left);
 
 setInterval(function() {
   var mouthstate = "open";

@@ -4,11 +4,11 @@ const left = 37;
 const up = 38;
 const right = 39;
 const down = 40;
-const minCharacterX = 0;
-const maxCharacterX = 1175;
-const minCharacterY = 25;
-const maxCharacterY = 550;
-const pacDiameter = 13;
+const pacRadius = 20;
+const minCharacterX = pacRadius;
+const maxCharacterX = 1208-pacRadius;
+const minCharacterY = pacRadius-5;
+const maxCharacterY = 555-pacRadius;
 
 const closeInterval = Math.PI/8;
 const bottomJaw = Math.PI/4;

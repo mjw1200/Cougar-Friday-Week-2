@@ -20,7 +20,7 @@ function rangeCheckX(x) {
   else if (x > maxCharacterX)
     x = maxCharacterX;
 
-  debuggingOutput("X range-checked x to " + x);
+  debuggingOutput("X range-checked to " + x);
   return x;
 }
 
@@ -34,7 +34,7 @@ function rangeCheckY(y) {
   if (y > maxCharacterY)
     y = maxCharacterY;
   
-  debuggingOutput("Y range-checked x to " + y);
+  debuggingOutput("Y range-checked to " + y);
   return y;
 }
 
