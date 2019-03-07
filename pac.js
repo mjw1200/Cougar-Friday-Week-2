@@ -141,6 +141,9 @@ function eraseGhost(x,y) {
 // Moves a ghost up, down, left, or right by "speed" pixels
 //---------------------------------------------------------------------------------------
 function moveGhost(direction) {
+  if (collision)
+    return;
+
   debuggingOutput("Moving ghost " + spellDirection(direction) + " from (" + ghostX + "," + ghostY + ")");
 
   var eyes = 0;
@@ -174,6 +177,33 @@ function moveGhost(direction) {
 
   if (eyes !== 0) {
     drawGhost(x, y, eyes);
+    checkForCollision();
+  }
+}
+
+function checkForCollision() {
+  var ghostMaxX = ghostX+28;
+  var ghostMinX = ghostX;
+  var ghostMaxY = ghostY;
+  var ghostMinY = ghostY-28;
+
+  var pacMaxX = pacX+(pacDiameter/2);
+  var pacMinX = pacX-(pacDiameter/2);
+  var pacMaxY = pacY+(pacDiameter/2);
+  var pacMinY = pacY-(pacDiameter/2);
+
+  debuggingOutput("Ghost: [(" + ghostMinX + "," + ghostMinY + "),(" + ghostMaxX + "," + ghostMaxY + ")]");
+  debuggingOutput("Pac: [(" + pacMinX + "," + pacMinY + "),(" + pacMaxX + "," + pacMaxY + ")]");
+  
+  if (between(ghostMaxX, pacMinX, pacMaxX) || between(ghostMinX, pacMinX, pacMaxX)) {
+    if (between(ghostMaxY, pacMinY, pacMaxY) || between(ghostMinY, pacMinY, pacMaxY)) {
+      collision = true;
+    }
+  }
+
+  if (collision === true) {
+    pacColor = 'red';
+    drawPac(pacX, pacY);
   }
 }
 
@@ -194,7 +224,7 @@ function drawPac(x, y, mouth) {
   pacX = x;
   pacY = y;
 
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = pacColor;
   ctx.beginPath();
 
   if (mouth === right || mouth === undefined) {
@@ -290,7 +320,11 @@ $("#canvas").keydown(function (event) {
   }
 });
 
-// drawGhost(ghostX, ghostY, left);
+x = Math.floor(Math.random()*((maxCharacterX-15)-(minCharacterX+16))+minCharacterX+15);
+y = Math.floor(Math.random()*((maxCharacterY+15)-(minCharacterY+16))+minCharacterY+15);
+drawPac(x, y);
+
+drawGhost(ghostX, ghostY, left);
 
 // function roundedRect(ctx, x, y, width, height, radius) {
 //   ctx.beginPath();

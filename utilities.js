@@ -64,3 +64,16 @@ function debuggingOutput(message) {
     console.log(message);
   }
 }
+
+//--------------------------------------------------------------------------------------
+// between
+// Return true if a is between min and max (inclusive); false otherwise
+//---------------------------------------------------------------------------------------
+function between(a, min, max) {
+  var verdict = false;
+
+  if (a >= min && a <= max)
+    verdict = true;
+
+  return verdict;
+}
