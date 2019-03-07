@@ -15,10 +15,10 @@ canvas.focus();
 // Ensure X is in range; return an in-range value if it's not
 //---------------------------------------------------------------------------------------
 function rangeCheckX(x) {
-  if (x < minCharacterX)
-    x = minCharacterX;
-  else if (x > maxCharacterX)
-    x = maxCharacterX;
+  if (x < minPacX)
+    x = minPacX;
+  else if (x > maxPacX)
+    x = maxPacX;
 
   debuggingOutput("X range-checked to " + x);
   return x;
@@ -29,10 +29,10 @@ function rangeCheckX(x) {
 // Ensure Y is in range; return an in-range value if it's not
 //---------------------------------------------------------------------------------------
 function rangeCheckY(y) {
-  if (y < minCharacterY)
-    y = minCharacterY;
-  if (y > maxCharacterY)
-    y = maxCharacterY;
+  if (y < minPacY)
+    y = minPacY;
+  if (y > maxPacY)
+    y = maxPacY;
   
   debuggingOutput("Y range-checked to " + y);
   return y;

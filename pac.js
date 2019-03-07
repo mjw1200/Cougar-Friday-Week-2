@@ -1,45 +1,41 @@
 //---------------------------------------------------------------------------------------
 // drawPac
-// Draws Pac-Man at (x,y)
+// Draws Pac-Man at (x,y) with mouth pointed in (direction). State is one of the constants
+// open, half_open, or closed, for animation.
 //---------------------------------------------------------------------------------------
-function drawPac(x, y, mouthDirection, mouthState) {
-  debuggingOutput("Erasing Pac at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
+function drawPac(x, y, direction = right, state = mouthOpen) {
+  debuggingOutput("Erasing Pac-Man at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
+
   erasePac(pacX, pacY);
-  var actualBottomJaw = 0;
-  var actualTopJaw = 0;
+  
+  //
+  // Set global variables so we know our state
+  pacDirection = direction;
+  pacState = state;
   pacX = x;
   pacY = y;
-  pacMouthDirection = mouthDirection;
-
-  ctx.fillStyle = 'black';
-  ctx.fillRect(pacX-pacRadius, pacY-pacRadius, pacDiameter, pacDiameter);
+  
+  // Set Pac-Man's trademark color
   ctx.fillStyle = '#FFFD38';
   
+  // Translate the origin from (0,0) to Pac-Man's location so we can rotate him correctly
   ctx.translate(pacX, pacY);
   
-  if (mouthDirection === down)
-    ctx.rotate(1.571);
-  else if (mouthDirection === left)
-    ctx.rotate(3.142);
-  else if (mouthDirection === up)
-    ctx.rotate(4.712);
+  // Rotations are clockwise
+  if (direction === down)
+    ctx.rotate(1.571); // π/2
+  else if (direction === left)
+    ctx.rotate(3.142); // π
+  else if (direction === up)
+    ctx.rotate(4.712); // 3π/2
 
-  actualBottomJaw = bottomJaw;
-  actualTopJaw = topJaw;
-
-  if (mouthState === "half") {
-    actualBottomJaw = bottomJaw - closeInterval;
-    actualTopJaw = topJaw + closeInterval;
-  }
-  if (mouthState === "closed") {
-    actualBottomJaw = bottomJaw - closeInterval*2;
-    actualTopJaw = topJaw + closeInterval*2;
-  }
-      
+  // Draw Pac-Man. Because we translated to his location, his center is now at (0,0)
   ctx.beginPath();
-  ctx.arc(0, 0, pacRadius, actualBottomJaw, actualTopJaw, false)
+  ctx.arc(0, 0, pacRadius, bottomJaw-closeInterval*state, topJaw+closeInterval*state, false)
   ctx.lineTo(0,0);
   ctx.fill();
+
+  // Clear the transformation matrix, putting the origin back where it should be
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
 
@@ -50,7 +46,7 @@ function drawPac(x, y, mouthDirection, mouthState) {
 function erasePac(x, y) {
   ctx.fillStyle = 'black';
   ctx.beginPath();
-  ctx.moveTo(x-pacRadius,y-pacRadius);
+  ctx.moveTo(x-pacRadius, y-pacRadius);
   ctx.lineTo(x-pacRadius, y+pacRadius);
   ctx.lineTo(x+pacRadius, y+pacRadius);
   ctx.lineTo(x+pacRadius, y-pacRadius);
@@ -59,7 +55,7 @@ function erasePac(x, y) {
 
 //---------------------------------------------------------------------------------------
 // movePac
-// Moves Pac-Man up, down, left, or right by "speed" pixels
+// Moves Pac-Man up, down, left, or right by "pacSpeed" pixels
 //---------------------------------------------------------------------------------------
 function movePac(direction) {
   var mouth = 0;
@@ -67,32 +63,32 @@ function movePac(direction) {
   var y = pacY;
 
   if (direction === up) {
-    if (y-characterSpeed >= minCharacterY) {
-      y -= characterSpeed;
+    if (y-pacSpeed >= minPacY) {
+      y -= pacSpeed;
       mouth = up;
     }
   }
   else if (direction === down) {
-    if (y+characterSpeed <= maxCharacterY) {
-      y += characterSpeed;
+    if (y+pacSpeed <= maxPacY) {
+      y += pacSpeed;
       mouth = down;
     }
   }
   else if (direction === right) {
-    if (x+characterSpeed <= maxCharacterX) {
-      x += characterSpeed;
+    if (x+pacSpeed <= maxPacX) {
+      x += pacSpeed;
       mouth = right;
     }
   }
   else if (direction === left) {
-    if (x-characterSpeed >= minCharacterX) {
-      x -= characterSpeed;
+    if (x-pacSpeed >= minPacX) {
+      x -= pacSpeed;
       mouth = left;
     }
   }
 
   if (mouth !== 0) {
-    drawPac(x, y, mouth);
+    drawPac(x, y, mouth, pacState);
   }
 }
 
@@ -119,22 +115,21 @@ $("#canvas").keydown(function (event) {
   }
 });
 
-x = Math.floor(Math.random()*((maxCharacterX-15)-(minCharacterX+16))+minCharacterX+15);
-y = Math.floor(Math.random()*((maxCharacterY+15)-(minCharacterY+16))+minCharacterY+15);
+x = Math.floor(Math.random()*((maxPacX-15)-(minPacX+16))+minPacX+15);
+y = Math.floor(Math.random()*((maxPacY+15)-(minPacY+16))+minPacY+15);
 drawPac(rangeCheckX(x), rangeCheckY(y), left);
 
 setInterval(function() {
-  var mouthstate = "open";
-  counter++;
-  if (counter % 4 === 0)
-      mouthstate = "half";
-  else if (counter % 4 === 1)
-      mouthstate = "closed";
-  else if (counter % 4 === 2)
-      mouthstate = "half";
-  else if (counter % 4 === 3)
-      mouthstate = "open";
+  var state = mouthOpen;
+
+  animationCount++;
+  if (animationCount % 4 === 0)
+      state = mouthHalfOpen;
+  else if (animationCount % 4 === 1)
+      state = mouthClosed;
+  else if (animationCount % 4 === 2)
+      state = mouthHalfOpen;
   
-  drawPac(pacX, pacY, pacMouthDirection, mouthstate);
+  drawPac(pacX, pacY, pacDirection, state);
 }, 150)
 
