@@ -11,8 +11,6 @@ const maxCharacterY = 550;
 const pacDiameter = 13;
 
 const onePiFour = Math.PI/4;
-const threePieFour = 3*onePiFour; // 3*(Math.PI/4)
-const fivePieFour = 5*onePiFour;  // 5*(Math.PI/4)
 const sevenPieFour = 7*onePiFour; // 7*(Math.PI/4)
 
 var characterSpeed = 10;
