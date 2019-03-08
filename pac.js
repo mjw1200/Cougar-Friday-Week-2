@@ -4,8 +4,11 @@
 // open, half_open, or closed, for animation.
 //---------------------------------------------------------------------------------------
 function drawPac(x, y, direction = right, state = mouthOpen) {
-  debuggingOutput("Erasing Pac-Man at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
+  x = rangeCheckX(x);
+  y = rangeCheckY(y);
 
+  debuggingOutput("Erasing Pac-Man at (" + pacX + "," + pacY + "); redrawing at (" + x + "," + y + ")");
+  
   erasePac(pacX, pacY);
   
   //
@@ -21,13 +24,13 @@ function drawPac(x, y, direction = right, state = mouthOpen) {
   // Translate the origin from (0,0) to Pac-Man's location so we can rotate him correctly
   ctx.translate(pacX, pacY);
   
-  // Rotations are clockwise
+  // Rotations are clockwise. 0°/360° is the default.
   if (direction === down)
-    ctx.rotate(1.571); // π/2
+    ctx.rotate(1.571); // π/2 (90°)
   else if (direction === left)
-    ctx.rotate(3.142); // π
+    ctx.rotate(3.142); // π (180°)
   else if (direction === up)
-    ctx.rotate(4.712); // 3π/2
+    ctx.rotate(4.712); // 3π/2 (270°)
 
   // Draw Pac-Man. Because we translated to his location, his center is now at (0,0)
   ctx.beginPath();
@@ -93,6 +96,35 @@ function movePac(direction) {
 }
 
 //---------------------------------------------------------------------------------------
+// startAnimation
+// Start Pac-Man a'flappin' his jaws
+//---------------------------------------------------------------------------------------
+function startAnimation() {
+  animationID = setInterval(function() {
+    var state = mouthOpen;
+  
+    animationCount++;
+    if (animationCount % 4 === 0)
+        state = mouthHalfOpen;
+    else if (animationCount % 4 === 1)
+        state = mouthClosed;
+    else if (animationCount % 4 === 2)
+        state = mouthHalfOpen;
+    
+    drawPac(pacX, pacY, pacDirection, state);
+  }, 150)
+}
+
+//---------------------------------------------------------------------------------------
+// stopAnimation
+// Tell Pac-Man "Hey, that's enough jaw-flappin'!!"
+//---------------------------------------------------------------------------------------
+function stopAnimation() {
+  clearInterval(animationID);
+  animationID = 0;
+}
+
+//---------------------------------------------------------------------------------------
 // Handle arrow key presses
 //
 // SGMS Cougar Friday students: this handler doesn't do anything. What changes would you
@@ -114,22 +146,4 @@ $("#canvas").keydown(function (event) {
     movePac(left);
   }
 });
-
-x = Math.floor(Math.random()*((maxPacX-15)-(minPacX+16))+minPacX+15);
-y = Math.floor(Math.random()*((maxPacY+15)-(minPacY+16))+minPacY+15);
-drawPac(rangeCheckX(x), rangeCheckY(y), left);
-
-setInterval(function() {
-  var state = mouthOpen;
-
-  animationCount++;
-  if (animationCount % 4 === 0)
-      state = mouthHalfOpen;
-  else if (animationCount % 4 === 1)
-      state = mouthClosed;
-  else if (animationCount % 4 === 2)
-      state = mouthHalfOpen;
-  
-  drawPac(pacX, pacY, pacDirection, state);
-}, 150)
 

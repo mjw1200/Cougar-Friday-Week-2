@@ -27,3 +27,5 @@ var animationCount = 0;
 var pacDirection = right;
 var pacState = mouthOpen;
 
+var animationID = 0;
+
