@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------------------
 // drawPac
-// Draws Pac-Man at (x,y) with mouth pointed in (direction). State is one of the constants
-// open, half_open, or closed, for animation.
+// Draws Pac-Man at (x,y) with mouth pointed in (direction). (state) is one of the
+// constants mouthOpen, mouthHalfOpen, or mouthClosed, for animation.
 //---------------------------------------------------------------------------------------
 function drawPac(x, y, direction = right, state = mouthOpen) {
   x = rangeCheckX(x);
@@ -128,22 +128,22 @@ function stopAnimation() {
 // Handle arrow key presses
 //
 // SGMS Cougar Friday students: this handler doesn't do anything. What changes would you
-// make so that it does something useful? TODO: Strip this function before go-live.
+// make so that it does something useful?
 //---------------------------------------------------------------------------------------
 $("#canvas").keydown(function (event) {
   debuggingOutput("Keydown detected, keyCode is " + spellDirection(event.keyCode));
 
   if (event.keyCode === up) {
-    movePac(up);
+    // wat do?
   }
   else if (event.keyCode === down) {
-    movePac(down);
+    // wat do?
   }
   else if (event.keyCode === right) {
-    movePac(right);
+    // wat do?
   }
   else if (event.keyCode === left) {
-    movePac(left);
+    // wat do?
   }
 });
 
